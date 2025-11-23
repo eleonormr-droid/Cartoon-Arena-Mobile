@@ -418,7 +418,7 @@
 
     #inventoryList { max-height: 200px; overflow-y: auto; }
 
-    /* Desktop : on affiche toutes les sections, on cache les onglets */
+    /* Desktop : on affiche tout, pas d’onglets */
     @media (min-width: 900px) {
       .mobile-tabs { display: none; }
       .mobile-section { display: block !important; }
@@ -428,11 +428,11 @@
       }
     }
 
-    /* Mobile : une seule section visible à la fois */
+    /* Mobile : une seule section à la fois */
     @media (max-width: 899px) {
       .mobile-section { display: none; }
       .mobile-section.active { display: block; }
-      .chip { display: none; } /* on cache le gros rappel des touches sur mobile */
+      .chip { display: none; }
     }
 
     /* Bouton & panneau dev flottant */
@@ -591,7 +591,7 @@
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">✅</span> Carnet de défis</h2>
-            <div class="card-header-tag">Objectifs & récompenses</div>
+          <div class="card-header-tag">Objectifs & récompenses</div>
           </div>
           <div class="card-body">
             <div id="achievementsList" style="font-size:13px;"></div>
@@ -781,7 +781,6 @@
   </div>
 
   <script>
-    /* --- DEV MODE & GESTION ONGLET MOBILE --- */
     const DEV_MODE = true;
     const LEVEL_CAP = 30;
     let GOD_MODE = false;
@@ -814,9 +813,6 @@
       span.textContent = GOD_MODE ? "ACTIF" : "INACTIF";
       span.style.color = GOD_MODE ? "#22c55e" : "#ef4444";
     }
-
-    /* --- le reste du code (stats, combats, boutique, etc.) est identique à ta version précédente --- */
-    /* Je le laisse complet pour que tu puisses juste remplacer le fichier et jouer. */
 
     const slotEmojis = {
       weapon: "🥊",
@@ -942,7 +938,6 @@
 
     function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-    /* Cheats dev */
     function devAddCoins(amount = 100) {
       if (!DEV_MODE) return;
       hero.coins += amount;
@@ -1000,7 +995,6 @@
       if (e.ctrlKey && e.shiftKey && key === "g") devToggleGodMode();
     });
 
-    /* Structures, stats, rendering etc. */
     let instantResolve = false;
     function toggleInstantResolve(cb) {
       instantResolve = cb.checked;
@@ -1999,3 +1993,4 @@
   </script>
 </body>
 </html>
+
