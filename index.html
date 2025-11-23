@@ -525,6 +525,25 @@
       .dev-btn { bottom: 74px; }
       .dev-panel { bottom: 126px; }
     }
+
+    /* Sélecteur de mode combat */
+    .mode-toggle {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+    button.mode-btn {
+      flex: 1;
+      padding: 5px 6px;
+      font-size: 11px;
+      background: #e5e7eb;
+      color: #111827;
+      box-shadow: none;
+    }
+    button.mode-btn.active {
+      background: linear-gradient(135deg,#f97316,#facc15);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.18);
+    }
   </style>
 </head>
 <body>
@@ -536,7 +555,7 @@
         </div>
         <div class="topbar-title">
           <h1>Cartoon Clash Arena</h1>
-          <div>Version mobile équilibrée, plus compacte. 😈</div>
+          <div>Version mobile, combat compact. 😈</div>
         </div>
       </div>
       <div class="topbar-right">
@@ -558,83 +577,55 @@
     </div>
 
     <main class="page">
-      <!-- ÉCRAN 1 : COMBAT (compact) -->
+      <!-- ÉCRAN 1 : COMBAT -->
       <section id="section-fight" class="mobile-section active">
-        <!-- Héros + Équipement regroupés -->
+        <!-- Carte : choix du mode de combat -->
         <div class="card">
           <div class="card-header">
-            <h2><span class="icon">🧍‍♂️</span> Ton héros & stuff</h2>
-            <div class="card-header-tag">Build actuel</div>
+            <h2><span class="icon">🥊</span> Mode de combat</h2>
+            <div class="card-header-tag">Histoire ou Arène</div>
           </div>
           <div class="card-body">
-            <div class="avatar-wrapper">
-              <div class="avatar">
-                <div class="avatar-face">😎</div>
-                <div class="avatar-band" id="avatarBand">Bruiser</div>
+            <div class="mode-toggle">
+              <button id="mode-story" class="mode-btn active" onclick="setCombatMode('story')">
+                📖 Histoire
+              </button>
+              <button id="mode-arena" class="mode-btn" onclick="setCombatMode('arena')">
+                🏟️ Arène
+              </button>
+            </div>
+
+            <!-- Contrôles mode histoire -->
+            <div id="storyControls">
+              <div style="margin-bottom:4px;font-size:12px;font-weight:600;">
+                Mode histoire (PvE)
               </div>
-              <div>
-                <div id="heroName"></div>
-                <div class="hero-meta" id="heroMeta"></div>
+              <button onclick="startMission('easy')">Mission facile</button>
+              <button class="secondary" onclick="startMission('normal')">Mission normale</button>
+              <button class="danger" onclick="startMission('hard')">Mission difficile</button>
+              <div style="margin-top:4px;font-size:11px;">
+                Facile = farm chill, Normal = équilibré, Difficile = plus risqué mais plus rentable.
+              </div>
+
+              <div class="skip-line">
+                <label>
+                  <input type="checkbox" id="instantToggle" onchange="toggleInstantResolve(this)">
+                  Résoudre les combats instantanément
+                </label>
               </div>
             </div>
 
-            <div class="stat-list" id="heroStats"></div>
-
-            <div class="hp-block">
-              <div class="hp-label">
-                <span>PV max</span>
-                <span id="heroHPText">—</span>
+            <!-- Contrôles mode arène -->
+            <div id="arenaControls" style="display:none;">
+              <div style="margin-bottom:4px;font-size:12px;font-weight:600;">
+                Arène PvP simulée
               </div>
-              <div class="hp-bar-outer">
-                <div id="heroHPBarInner" class="hp-bar-inner"></div>
+              <div id="arenaInfo" style="margin-bottom:4px;"></div>
+              <button onclick="startArenaBattle()">Match d'arène</button>
+              <div style="margin-top:4px;font-size:11px;">
+                Affronte des profils simulés, gagne des points et monte de rang.
               </div>
             </div>
-
-            <p style="margin-top:6px;font-size:12px;">
-              Points de stats à répartir : <span id="statPoints">0</span>
-            </p>
-            <div id="statButtons" style="margin-bottom:6px;"></div>
-
-            <hr style="border:none;border-top:1px solid #e5e7eb;margin:6px 0;" />
-
-            <div>
-              <strong>Équipement équipé :</strong>
-              <div id="equipment" style="margin-top:4px;"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Combats (histoire + arène dans une seule carte) -->
-        <div class="card">
-          <div class="card-header">
-            <h2><span class="icon">🥊</span> Combats</h2>
-            <div class="card-header-tag">PVE & Arène</div>
-          </div>
-          <div class="card-body">
-            <div style="margin-bottom:4px;font-size:12px;font-weight:600;">
-              Mode histoire (PvE)
-            </div>
-            <button onclick="startMission('easy')">Mission facile</button>
-            <button class="secondary" onclick="startMission('normal')">Mission normale</button>
-            <button class="danger" onclick="startMission('hard')">Mission difficile</button>
-            <div style="margin-top:4px;font-size:11px;">
-              Facile = farm chill, Normal = équilibré, Difficile = plus risqué mais plus rentable.
-            </div>
-
-            <div class="skip-line">
-              <label>
-                <input type="checkbox" id="instantToggle" onchange="toggleInstantResolve(this)">
-                Résoudre les combats instantanément
-              </label>
-            </div>
-
-            <hr style="border:none;border-top:1px solid #e5e7eb;margin:6px 0;" />
-
-            <div style="margin-bottom:4px;font-size:12px;font-weight:600;">
-              Arène PvP simulée
-            </div>
-            <div id="arenaInfo" style="margin-bottom:4px;"></div>
-            <button onclick="startArenaBattle()">Match d'arène</button>
           </div>
         </div>
 
@@ -701,8 +692,53 @@
         </div>
       </section>
 
-      <!-- ÉCRAN 2 : INVENTAIRE -->
+      <!-- ÉCRAN 2 : INVENTAIRE + HÉROS -->
       <section id="section-inventory" class="mobile-section">
+        <!-- Héros + stuff déplacé ici -->
+        <div class="card">
+          <div class="card-header">
+            <h2><span class="icon">🧍‍♂️</span> Ton héros & stuff</h2>
+            <div class="card-header-tag">Build & stats</div>
+          </div>
+          <div class="card-body">
+            <div class="avatar-wrapper">
+              <div class="avatar">
+                <div class="avatar-face">😎</div>
+                <div class="avatar-band" id="avatarBand">Bruiser</div>
+              </div>
+              <div>
+                <div id="heroName"></div>
+                <div class="hero-meta" id="heroMeta"></div>
+              </div>
+            </div>
+
+            <div class="stat-list" id="heroStats"></div>
+
+            <div class="hp-block">
+              <div class="hp-label">
+                <span>PV max</span>
+                <span id="heroHPText">—</span>
+              </div>
+              <div class="hp-bar-outer">
+                <div id="heroHPBarInner" class="hp-bar-inner"></div>
+              </div>
+            </div>
+
+            <p style="margin-top:6px;font-size:12px;">
+              Points de stats à répartir : <span id="statPoints">0</span>
+            </p>
+            <div id="statButtons" style="margin-bottom:6px;"></div>
+
+            <hr style="border:none;border-top:1px solid #e5e7eb;margin:6px 0;" />
+
+            <div>
+              <strong>Équipement équipé :</strong>
+              <div id="equipment" style="margin-top:4px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inventaire -->
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">🎒</span> Inventaire</h2>
@@ -823,6 +859,7 @@
     const DEV_MODE = true;
     const LEVEL_CAP = 30;
     let GOD_MODE = false;
+    let currentCombatMode = "story";
 
     function setMobileSection(id) {
       const sections = ["fight","inventory","shop","quests"];
@@ -838,6 +875,27 @@
           if (btn) btn.classList.remove("active");
         }
       });
+    }
+
+    function setCombatMode(mode) {
+      currentCombatMode = mode;
+      const storyBtn = document.getElementById("mode-story");
+      const arenaBtn = document.getElementById("mode-arena");
+      const story = document.getElementById("storyControls");
+      const arena = document.getElementById("arenaControls");
+      if (!storyBtn || !arenaBtn || !story || !arena) return;
+
+      if (mode === "story") {
+        storyBtn.classList.add("active");
+        arenaBtn.classList.remove("active");
+        story.style.display = "";
+        arena.style.display = "none";
+      } else {
+        storyBtn.classList.remove("active");
+        arenaBtn.classList.add("active");
+        story.style.display = "none";
+        arena.style.display = "";
+      }
     }
 
     function toggleDevPanel() {
@@ -904,7 +962,6 @@
       { id: "rating200", name: "Respect du quartier", desc: "Atteindre 200 points d'arène.",   type: "arenaRating", target: 200, rewardCoins: 100 }
     ];
 
-    /* Quêtes quotidiennes */
     const DAILY_QUESTS = [
       { id: "d_story3",  name: "Enchaîner 3 missions", type: "storyWinsToday", target: 3,  rewardCoins: 30 },
       { id: "d_arena1",  name: "Gagner 1 match d'arène", type: "arenaWinsToday", target: 1, rewardCoins: 40 },
@@ -1635,7 +1692,6 @@
       document.getElementById("heroHPText").textContent = `${fullHero} / ${fullHero}`;
       document.getElementById("heroHPBarInner").style.width = "100%";
 
-      /* HUD */
       const hudLevel = document.getElementById("hudLevel");
       const hudXP = document.getElementById("hudXP");
       const hudCoins = document.getElementById("hudCoins");
@@ -1745,10 +1801,12 @@
       const arenaInfo = document.getElementById("arenaInfo");
       const rankName = getArenaRankName(a.rating);
       const rankEmoji = getArenaRankEmoji(a.rating);
-      arenaInfo.innerHTML =
-        `<div class="arena-rank">Rang : ${rankEmoji} ${rankName}` +
-        `<span class="arena-rank-badge">${a.rating} pts</span></div>` +
-        `<div style="font-size:12px;margin-top:2px;">Victoires : ${a.wins} • Défaites : ${a.losses}</div>`;
+      if (arenaInfo) {
+        arenaInfo.innerHTML =
+          `<div class="arena-rank">Rang : ${rankEmoji} ${rankName}` +
+          `<span class="arena-rank-badge">${a.rating} pts</span></div>` +
+          `<div style="font-size:12px;margin-top:2px;">Victoires : ${a.wins} • Défaites : ${a.losses}</div>`;
+      }
 
       const hudArena = document.getElementById("hudArena");
       if (hudArena) hudArena.textContent = `${rankEmoji} ${rankName}`;
@@ -1859,6 +1917,7 @@
       renderDaily();
       if (!combatContext || !combatContext.active) resetDuelBars();
       updateDevGodLabel();
+      setCombatMode(currentCombatMode);
     }
 
     function startMission(difficulty) {
@@ -2185,7 +2244,8 @@
     renderAll();
     clearLog();
     updateDevGodLabel();
-    log("Bienvenue dans Cartoon Clash Arena (combat compact) ! Utilise la barre du bas pour naviguer. 🥊", "system");
+    setCombatMode("story");
+    log("Bienvenue dans Cartoon Clash Arena ! Onglet Combat = pur fight, onglet Inventaire = build. 🥊", "system");
     flushLogQueue();
   </script>
 </body>
