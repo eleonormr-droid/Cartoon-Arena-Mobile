@@ -536,7 +536,7 @@
         </div>
         <div class="topbar-title">
           <h1>Cartoon Clash Arena</h1>
-          <div>Version mobile équilibrée, plus propre. 😈</div>
+          <div>Version mobile équilibrée, plus compacte. 😈</div>
         </div>
       </div>
       <div class="topbar-right">
@@ -558,13 +558,13 @@
     </div>
 
     <main class="page">
-      <!-- ÉCRAN 1 : COMBAT + HÉROS + ÉQUIPEMENT + JOURNAL -->
+      <!-- ÉCRAN 1 : COMBAT (compact) -->
       <section id="section-fight" class="mobile-section active">
-        <!-- Héros -->
+        <!-- Héros + Équipement regroupés -->
         <div class="card">
           <div class="card-header">
-            <h2><span class="icon">🧍‍♂️</span> Ton héros</h2>
-            <div class="card-header-tag">Build & stats</div>
+            <h2><span class="icon">🧍‍♂️</span> Ton héros & stuff</h2>
+            <div class="card-header-tag">Build actuel</div>
           </div>
           <div class="card-body">
             <div class="avatar-wrapper">
@@ -577,7 +577,9 @@
                 <div class="hero-meta" id="heroMeta"></div>
               </div>
             </div>
+
             <div class="stat-list" id="heroStats"></div>
+
             <div class="hp-block">
               <div class="hp-label">
                 <span>PV max</span>
@@ -587,66 +589,60 @@
                 <div id="heroHPBarInner" class="hp-bar-inner"></div>
               </div>
             </div>
+
             <p style="margin-top:6px;font-size:12px;">
               Points de stats à répartir : <span id="statPoints">0</span>
             </p>
-            <div id="statButtons"></div>
+            <div id="statButtons" style="margin-bottom:6px;"></div>
+
+            <hr style="border:none;border-top:1px solid #e5e7eb;margin:6px 0;" />
+
+            <div>
+              <strong>Équipement équipé :</strong>
+              <div id="equipment" style="margin-top:4px;"></div>
+            </div>
           </div>
         </div>
 
-        <!-- Équipement équipé -->
+        <!-- Combats (histoire + arène dans une seule carte) -->
         <div class="card">
           <div class="card-header">
-            <h2><span class="icon">🧰</span> Équipement équipé</h2>
-            <div class="card-header-tag">Ce que tu portes</div>
+            <h2><span class="icon">🥊</span> Combats</h2>
+            <div class="card-header-tag">PVE & Arène</div>
           </div>
           <div class="card-body">
-            <div id="equipment"></div>
-          </div>
-        </div>
-
-        <!-- Mode histoire -->
-        <div class="card">
-          <div class="card-header">
-            <h2><span class="icon">📖</span> Mode histoire (PvE)</h2>
-            <div class="card-header-tag">Farm XP / pièces</div>
-          </div>
-          <div class="card-body">
+            <div style="margin-bottom:4px;font-size:12px;font-weight:600;">
+              Mode histoire (PvE)
+            </div>
             <button onclick="startMission('easy')">Mission facile</button>
             <button class="secondary" onclick="startMission('normal')">Mission normale</button>
             <button class="danger" onclick="startMission('hard')">Mission difficile</button>
-            <div style="margin-top:6px;font-size:12px;">
-              Plus la difficulté est haute, plus les récompenses sont bonnes… et plus ça cogne.
+            <div style="margin-top:4px;font-size:11px;">
+              Facile = farm chill, Normal = équilibré, Difficile = plus risqué mais plus rentable.
             </div>
+
             <div class="skip-line">
               <label>
                 <input type="checkbox" id="instantToggle" onchange="toggleInstantResolve(this)">
                 Résoudre les combats instantanément
               </label>
             </div>
-          </div>
-        </div>
 
-        <!-- Arène -->
-        <div class="card">
-          <div class="card-header">
-            <h2><span class="icon">🏟️</span> Arène PvP</h2>
-            <div class="card-header-tag">Ladder & rang</div>
-          </div>
-          <div class="card-body">
-            <div id="arenaInfo" style="margin-bottom:6px;"></div>
-            <button onclick="startArenaBattle()">Match d'arène</button>
-            <div style="margin-top:6px;font-size:12px;">
-              Affronte des “joueurs” simulés, gagne des points d'arène et monte de rang.
+            <hr style="border:none;border-top:1px solid #e5e7eb;margin:6px 0;" />
+
+            <div style="margin-bottom:4px;font-size:12px;font-weight:600;">
+              Arène PvP simulée
             </div>
+            <div id="arenaInfo" style="margin-bottom:4px;"></div>
+            <button onclick="startArenaBattle()">Match d'arène</button>
           </div>
         </div>
 
-        <!-- Ennemi -->
+        <!-- Ennemi + PV combat -->
         <div class="card enemy-card">
           <div class="card-header">
-            <h2><span class="icon">🤜</span> Adversaire actuel</h2>
-            <div class="card-header-tag">Cible</div>
+            <h2><span class="icon">🤜</span> Adversaire & PV combat</h2>
+            <div class="card-header-tag">Situation actuelle</div>
           </div>
           <div class="card-body">
             <div class="avatar-wrapper">
@@ -657,28 +653,20 @@
               <div>
                 <div id="enemyInfo">Aucun ennemi pour l'instant. Lance une mission ou un match d'arène.</div>
                 <div class="enemy-stats" id="enemyStats"></div>
-                <div class="hp-block" style="margin-top:6px;">
-                  <div class="hp-label">
-                    <span>PV max ennemi</span>
-                    <span id="enemyHPText">—</span>
-                  </div>
-                  <div class="hp-bar-outer">
-                    <div id="enemyHPBarInner" class="hp-bar-inner enemy"></div>
-                  </div>
-                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- PV combat -->
-        <div class="card">
-          <div class="card-header">
-            <h2><span class="icon">❤️</span> PV du combat</h2>
-            <div class="card-header-tag">Round en cours</div>
-          </div>
-          <div class="card-body">
-            <div class="hp-combat-row">
+            <div class="hp-block" style="margin-top:6px;">
+              <div class="hp-label">
+                <span>PV max ennemi</span>
+                <span id="enemyHPText">—</span>
+              </div>
+              <div class="hp-bar-outer">
+                <div id="enemyHPBarInner" class="hp-bar-inner enemy"></div>
+              </div>
+            </div>
+
+            <div class="hp-combat-row" style="margin-top:6px;">
               <div class="hp-block">
                 <div class="hp-label">
                   <span>Toi</span>
@@ -2197,7 +2185,7 @@
     renderAll();
     clearLog();
     updateDevGodLabel();
-    log("Bienvenue dans Cartoon Clash Arena (version équilibrée) ! Utilise la barre du bas pour naviguer. 🥊", "system");
+    log("Bienvenue dans Cartoon Clash Arena (combat compact) ! Utilise la barre du bas pour naviguer. 🥊", "system");
     flushLogQueue();
   </script>
 </body>
