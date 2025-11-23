@@ -97,7 +97,6 @@
       gap: 2px;
     }
 
-    /* HUD */
     .hud {
       display: flex;
       flex-wrap: wrap;
@@ -266,84 +265,107 @@
       color: #374151;
     }
 
+    /* === PAPIER DOLL / PERSONNAGE === */
+
     .avatar-wrapper {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 6px;
     }
 
-    .avatar {
-      width: 70px;
-      height: 70px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #f97316, #facc15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    .paperdoll-container {
+      width: 120px;
+      height: 150px;
       position: relative;
-      overflow: hidden;
-      transition: background 0.2s ease;
     }
 
-    .avatar-face {
-      width: 38px;
-      height: 38px;
-      background: #fffbeb;
+    .paperdoll {
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 60%);
+      box-shadow: 0 4px 10px rgba(15,23,42,0.5);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148,163,184,0.8);
+    }
+
+    .doll-body {
+      position: absolute;
+      inset: 20px 20px 12px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 4px;
+    }
+
+    .doll-head {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      border: 2px solid rgba(0,0,0,0.15);
+      background: #fffbeb;
+      border: 2px solid rgba(15,23,42,0.8);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
 
-    .avatar-band {
+    .doll-torso {
+      width: 45px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,#f97316,#facc15);
+      border: 1px solid rgba(15,23,42,0.7);
+      box-shadow: 0 2px 3px rgba(0,0,0,0.5);
+    }
+
+    .doll-legs {
+      width: 36px;
+      height: 28px;
+      border-radius: 12px 12px 10px 10px;
+      background: #0f172a;
+      border: 1px solid rgba(15,23,42,0.8);
+      margin-top: 2px;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.6);
+    }
+
+    .doll-slot {
       position: absolute;
-      bottom: 3px;
-      left: 6px;
-      right: 6px;
-      height: 16px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.85);
+      width: 26px;
+      height: 26px;
+      border-radius: 9px;
+      border: 2px solid #6b7280;
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
-      color: #f9fafb;
+      font-size: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.6);
     }
 
-    .enemy-avatar {
-      background: linear-gradient(135deg, #ef4444, #f97316);
+    .doll-slot-helmet { top: 3px; left: 50%; transform: translateX(-50%); }
+    .doll-slot-weapon { top: 28px; left: 3px; }
+    .doll-slot-armor  { top: 48px; right: 3px; }
+    .doll-slot-boots  { bottom: 6px; left: 10px; }
+    .doll-slot-accessory { bottom: 6px; right: 10px; }
+
+    .hero-summary {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    .enemy-card {
-      background: radial-gradient(circle at top, #020617 0, #0b1120 60%);
-      color: #e5e7eb;
-      border-color: #1f2937;
-    }
-
-    .enemy-card .card-header h2 { color: #e5e7eb; }
-    .enemy-card .card-header-tag {
-      background: rgba(15,23,42,0.7);
-      color: #e5e7eb;
-      border-color: #1f2937;
-    }
-
-    .enemy-stats { font-size: 11px; margin-top: 4px; color: #9ca3af; }
-
-    .pill {
-      display: inline-block;
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.4);
+    .hero-summary button {
+      padding: 4px 8px;
       font-size: 11px;
-      margin-right: 4px;
       margin-top: 2px;
     }
-
-    .shop-note { font-size: 12px; color: #4b5563; margin-top: 4px; }
 
     .hp-block { margin-top: 6px; font-size: 11px; }
 
@@ -381,6 +403,37 @@
 
     .hp-combat-row .hp-block { flex: 1; }
 
+    .enemy-avatar {
+      background: linear-gradient(135deg, #ef4444, #f97316);
+    }
+
+    .enemy-card {
+      background: radial-gradient(circle at top, #020617 0, #0b1120 60%);
+      color: #e5e7eb;
+      border-color: #1f2937;
+    }
+
+    .enemy-card .card-header h2 { color: #e5e7eb; }
+    .enemy-card .card-header-tag {
+      background: rgba(15,23,42,0.7);
+      color: #e5e7eb;
+      border-color: #1f2937;
+    }
+
+    .enemy-stats { font-size: 11px; margin-top: 4px; color: #9ca3af; }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.4);
+      font-size: 11px;
+      margin-right: 4px;
+      margin-top: 2px;
+    }
+
+    .shop-note { font-size: 12px; color: #4b5563; margin-top: 4px; }
+
     .arena-rank { font-weight: 600; }
 
     .arena-rank-badge {
@@ -403,7 +456,6 @@
 
     #inventoryList { max-height: 400px; overflow-y: auto; }
 
-    /* NAV BAS façon Clash Royale */
     .bottom-nav {
       position: fixed;
       left: 0;
@@ -443,14 +495,12 @@
       color: #111827;
     }
 
-    /* Desktop : on montre tout, pas de nav bas */
     @media (min-width: 900px) {
       .bottom-nav { display: none; }
       .mobile-section { display: block !important; }
       .page { padding-bottom: 18px; }
     }
 
-    /* Mobile : un écran à la fois */
     @media (max-width: 899px) {
       .mobile-section { display: none; }
       .mobile-section.active { display: block; }
@@ -458,7 +508,6 @@
       .page { padding-bottom: 80px; }
     }
 
-    /* Bouton & panneau dev flottant */
     .dev-btn {
       position: fixed;
       right: 14px;
@@ -478,6 +527,7 @@
       transition: opacity 0.15s ease, transform 0.1s ease;
       bottom: 14px;
     }
+
     .dev-btn:hover {
       opacity: 1;
       transform: translateY(-1px);
@@ -497,7 +547,9 @@
       display: none;
       bottom: 62px;
     }
+
     .dev-panel.open { display: block; }
+
     .dev-panel h3 {
       margin: 0 0 4px 0;
       font-size: 13px;
@@ -505,33 +557,35 @@
       align-items: center;
       justify-content: space-between;
     }
+
     .dev-panel small {
       display: block;
       margin-bottom: 6px;
       color: #9ca3af;
     }
+
     .dev-panel button {
       margin: 3px 3px 0 0;
       padding: 5px 8px;
       font-size: 11px;
     }
+
     #devGodState {
       font-weight: 700;
       margin-left: 4px;
     }
 
-    /* Dev menu au-dessus de la nav sur mobile */
     @media (max-width: 899px) {
       .dev-btn { bottom: 74px; }
       .dev-panel { bottom: 126px; }
     }
 
-    /* Sélecteur de mode combat */
     .mode-toggle {
       display: flex;
       gap: 4px;
       margin-bottom: 6px;
     }
+
     button.mode-btn {
       flex: 1;
       padding: 5px 6px;
@@ -540,9 +594,84 @@
       color: #111827;
       box-shadow: none;
     }
+
     button.mode-btn.active {
       background: linear-gradient(135deg,#f97316,#facc15);
       box-shadow: 0 2px 5px rgba(0,0,0,0.18);
+    }
+
+    /* === OVERLAY CRÉATION HÉROS === */
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .overlay.hidden { display: none; }
+
+    .overlay-inner {
+      width: 90%;
+      max-width: 360px;
+      background: #0b1120;
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      border: 1px solid #1f2937;
+    }
+
+    .overlay-inner h2 {
+      margin: 0 0 4px 0;
+      font-size: 18px;
+    }
+
+    .overlay-inner p {
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .overlay-inner input {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #f9fafb;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .color-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .color-choice {
+      flex: 1;
+      height: 34px;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    }
+
+    .color-choice.selected {
+      border-color: #fde68a;
+      box-shadow: 0 0 0 1px #facc15, 0 3px 10px rgba(0,0,0,0.7);
+    }
+
+    .overlay-inner button {
+      width: 100%;
+      margin: 0;
+      margin-top: 4px;
     }
   </style>
 </head>
@@ -555,7 +684,7 @@
         </div>
         <div class="topbar-title">
           <h1>Cartoon Clash Arena</h1>
-          <div>Version mobile, combat compact. 😈</div>
+          <div>Version mobile, perso visible & création de héros. 😈</div>
         </div>
       </div>
       <div class="topbar-right">
@@ -579,7 +708,6 @@
     <main class="page">
       <!-- ÉCRAN 1 : COMBAT -->
       <section id="section-fight" class="mobile-section active">
-        <!-- Carte : choix du mode de combat -->
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">🥊</span> Mode de combat</h2>
@@ -595,7 +723,6 @@
               </button>
             </div>
 
-            <!-- Contrôles mode histoire -->
             <div id="storyControls">
               <div style="margin-bottom:4px;font-size:12px;font-weight:600;">
                 Mode histoire (PvE)
@@ -615,7 +742,6 @@
               </div>
             </div>
 
-            <!-- Contrôles mode arène -->
             <div id="arenaControls" style="display:none;">
               <div style="margin-bottom:4px;font-size:12px;font-weight:600;">
                 Arène PvP simulée
@@ -629,7 +755,6 @@
           </div>
         </div>
 
-        <!-- Ennemi + PV combat -->
         <div class="card enemy-card">
           <div class="card-header">
             <h2><span class="icon">🤜</span> Adversaire & PV combat</h2>
@@ -637,9 +762,14 @@
           </div>
           <div class="card-body">
             <div class="avatar-wrapper">
-              <div class="avatar enemy-avatar">
-                <div class="avatar-face">😠</div>
-                <div class="avatar-band" id="enemyBand">En attente</div>
+              <div class="paperdoll-container">
+                <div class="paperdoll enemy-avatar">
+                  <div class="doll-body">
+                    <div class="doll-head" id="enemyHead"><span>😠</span></div>
+                    <div class="doll-torso" id="enemyTorso"></div>
+                    <div class="doll-legs" id="enemyLegs"></div>
+                  </div>
+                </div>
               </div>
               <div>
                 <div id="enemyInfo">Aucun ennemi pour l'instant. Lance une mission ou un match d'arène.</div>
@@ -680,7 +810,6 @@
           </div>
         </div>
 
-        <!-- Journal -->
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">📜</span> Journal de combat</h2>
@@ -694,21 +823,34 @@
 
       <!-- ÉCRAN 2 : INVENTAIRE + HÉROS -->
       <section id="section-inventory" class="mobile-section">
-        <!-- Héros + stuff déplacé ici -->
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">🧍‍♂️</span> Ton héros & stuff</h2>
-            <div class="card-header-tag">Build & stats</div>
+            <div class="card-header-tag">Build & visuel</div>
           </div>
           <div class="card-body">
             <div class="avatar-wrapper">
-              <div class="avatar">
-                <div class="avatar-face">😎</div>
-                <div class="avatar-band" id="avatarBand">Bruiser</div>
+              <div class="paperdoll-container">
+                <div class="paperdoll" id="heroPaperdoll">
+                  <div class="doll-slot doll-slot-helmet" id="slot-helmet">🧢</div>
+                  <div class="doll-slot doll-slot-weapon" id="slot-weapon">🥊</div>
+                  <div class="doll-slot doll-slot-armor" id="slot-armor">🧥</div>
+                  <div class="doll-slot doll-slot-boots" id="slot-boots">👟</div>
+                  <div class="doll-slot doll-slot-accessory" id="slot-accessory">💍</div>
+
+                  <div class="doll-body">
+                    <div class="doll-head" id="dollHead">
+                      <span id="dollFace">😎</span>
+                    </div>
+                    <div class="doll-torso" id="dollTorso"></div>
+                    <div class="doll-legs" id="dollLegs"></div>
+                  </div>
+                </div>
               </div>
-              <div>
+              <div class="hero-summary">
                 <div id="heroName"></div>
                 <div class="hero-meta" id="heroMeta"></div>
+                <button class="secondary" onclick="openCreationOverlay(true)">Modifier l'avatar</button>
               </div>
             </div>
 
@@ -738,7 +880,6 @@
           </div>
         </div>
 
-        <!-- Inventaire -->
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">🎒</span> Inventaire</h2>
@@ -777,7 +918,6 @@
 
       <!-- ÉCRAN 4 : QUÊTES + COSMÉTIQUES -->
       <section id="section-quests" class="mobile-section">
-        <!-- Quêtes quotidiennes -->
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">⏰</span> Quêtes quotidiennes</h2>
@@ -789,7 +929,6 @@
           </div>
         </div>
 
-        <!-- Défis -->
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">✅</span> Carnet de défis</h2>
@@ -800,7 +939,6 @@
           </div>
         </div>
 
-        <!-- Cosmétiques -->
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">🎨</span> Cosmétiques</h2>
@@ -855,11 +993,53 @@
     </div>
   </div>
 
+  <!-- OVERLAY CRÉATION / MODIF AVATAR -->
+  <div id="creationOverlay" class="overlay hidden">
+    <div class="overlay-inner">
+      <h2>Crée ton héros</h2>
+      <p>Choisis ton pseudo et la couleur de ton avatar.</p>
+      <input id="createName" type="text" maxlength="16" placeholder="Ton pseudo" />
+
+      <div class="color-row">
+        <button type="button" class="color-choice selected"
+                data-theme="orange"
+                style="background:linear-gradient(135deg,#f97316,#facc15);"
+                onclick="selectTheme('orange')"></button>
+        <button type="button" class="color-choice"
+                data-theme="green"
+                style="background:linear-gradient(135deg,#22c55e,#4ade80);"
+                onclick="selectTheme('green')"></button>
+        <button type="button" class="color-choice"
+                data-theme="blue"
+                style="background:linear-gradient(135deg,#3b82f6,#38bdf8);"
+                onclick="selectTheme('blue')"></button>
+        <button type="button" class="color-choice"
+                data-theme="purple"
+                style="background:linear-gradient(135deg,#a855f7,#c084fc);"
+                onclick="selectTheme('purple')"></button>
+      </div>
+
+      <button onclick="confirmCreation()">C'est parti !</button>
+    </div>
+  </div>
+
   <script>
     const DEV_MODE = true;
     const LEVEL_CAP = 30;
     let GOD_MODE = false;
     let currentCombatMode = "story";
+    let selectedTheme = "orange";
+
+    const AVATAR_THEMES = {
+      orange: { torso:"linear-gradient(135deg,#f97316,#facc15)", legs:"#f97316" },
+      green:  { torso:"linear-gradient(135deg,#22c55e,#4ade80)", legs:"#16a34a" },
+      blue:   { torso:"linear-gradient(135deg,#3b82f6,#38bdf8)", legs:"#1d4ed8" },
+      purple: { torso:"linear-gradient(135deg,#a855f7,#c084fc)", legs:"#7e22ce" }
+    };
+
+    function getAvatarThemeColors(theme) {
+      return AVATAR_THEMES[theme] || AVATAR_THEMES.orange;
+    }
 
     function setMobileSection(id) {
       const sections = ["fight","inventory","shop","quests"];
@@ -991,7 +1171,9 @@
       cosmetics: null,
       shop: null,
       inventory: [],
-      daily: null
+      daily: null,
+      appearance: null,
+      meta: null
     };
 
     function loadHero() {
@@ -1077,6 +1259,7 @@
       hero.progress.arenaRatingBest = Math.max(hero.progress.arenaRatingBest || 0, hero.arena.rating || 0);
 
       if (hero.cosmetics) hero.cosmetics.unlocked = Object.keys(SKINS);
+      if (!hero.appearance) hero.appearance = { theme: "orange" };
 
       saveHero(); renderAll();
       log("[DEV] Héros maxé : niveau, stats, légendaires, arène et skins boostés.", "system");
@@ -1213,7 +1396,11 @@
         }
       }
 
+      if (!hero.appearance) hero.appearance = { theme: "orange" };
+      if (!hero.meta) hero.meta = { created: false };
+
       ensureDaily();
+      selectedTheme = hero.appearance.theme || "orange";
     }
 
     function getRarityById(id) {
@@ -1535,12 +1722,16 @@
 
     function applyCurrentSkin() {
       const skin = SKINS[hero.cosmetics.currentSkin] || SKINS.default;
-      const avatar = document.querySelector(".avatar");
-      const face = document.querySelector(".avatar-face");
-      const band = document.getElementById("avatarBand");
-      if (avatar && skin.gradient) avatar.style.background = skin.gradient;
+      const head = document.getElementById("dollHead");
+      const torso = document.getElementById("dollTorso");
+      const legs = document.getElementById("dollLegs");
+      const face = document.getElementById("dollFace");
+      const themeColors = getAvatarThemeColors(hero.appearance.theme || "orange");
+
       if (face && skin.face) face.textContent = skin.face;
-      if (band && skin.bandText) band.textContent = skin.bandText;
+      if (torso) torso.style.background = skin.gradient || themeColors.torso;
+      if (legs) legs.style.background = themeColors.legs;
+      if (head) head.style.borderColor = "rgba(15,23,42,0.8)";
     }
 
     function renderCosmetics() {
@@ -1563,7 +1754,7 @@
           btn.style.marginLeft = "6px";
           btn.onclick = () => {
             hero.cosmetics.currentSkin = skin.id;
-            saveHero(); applyCurrentSkin(); renderCosmetics();
+            saveHero(); applyCurrentSkin(); renderCosmetics(); updatePaperDollFromEquipment();
           };
           row.appendChild(btn);
         }
@@ -1765,19 +1956,19 @@
         }
         el.appendChild(div);
       });
+
+      updatePaperDollFromEquipment();
     }
 
     function renderEnemy() {
       const infoEl = document.getElementById("enemyInfo");
       const statsEl = document.getElementById("enemyStats");
-      const bandEl = document.getElementById("enemyBand");
       const enemyHPText = document.getElementById("enemyHPText");
       const enemyHPBarInner = document.getElementById("enemyHPBarInner");
 
       if (!currentEnemy) {
         infoEl.textContent = "Aucun ennemi pour l'instant. Lance une mission ou un match d'arène.";
         statsEl.textContent = "";
-        bandEl.textContent = "En attente";
         enemyHPText.textContent = "—";
         enemyHPBarInner.style.width = "0%";
         return;
@@ -1789,7 +1980,6 @@
         `<span class="pill">PRE ${currentEnemy.PRE}</span>` +
         `<span class="pill">ESQ ${currentEnemy.ESQ}</span>` +
         `<span class="pill">VITZ ${currentEnemy.VITZ}</span>`;
-      bandEl.textContent = "En mission";
 
       const fullEnemy = currentEnemy.VIT * 10;
       enemyHPText.textContent = `${fullEnemy} / ${fullEnemy}`;
@@ -1900,6 +2090,64 @@
         row.appendChild(btn);
         list.appendChild(row);
       });
+    }
+
+    function updatePaperDollFromEquipment() {
+      const head = document.getElementById("dollHead");
+      const torso = document.getElementById("dollTorso");
+      const legs = document.getElementById("dollLegs");
+
+      const slotHelmet = document.getElementById("slot-helmet");
+      const slotWeapon = document.getElementById("slot-weapon");
+      const slotArmor = document.getElementById("slot-armor");
+      const slotBoots = document.getElementById("slot-boots");
+      const slotAccessory = document.getElementById("slot-accessory");
+
+      const themeColors = getAvatarThemeColors(hero.appearance.theme || "orange");
+
+      if (torso) torso.style.background = themeColors.torso;
+      if (legs) legs.style.background = themeColors.legs;
+      if (head) head.style.boxShadow = "0 2px 4px rgba(0,0,0,0.4)";
+
+      [slotHelmet, slotWeapon, slotArmor, slotBoots, slotAccessory].forEach(s => {
+        if (s) s.style.borderColor = "#6b7280";
+      });
+
+      if (slotWeapon) slotWeapon.textContent = slotEmojis.weapon;
+      if (slotHelmet) slotHelmet.textContent = slotEmojis.helmet;
+      if (slotArmor) slotArmor.textContent = slotEmojis.armor;
+      if (slotBoots) slotBoots.textContent = slotEmojis.boots;
+      if (slotAccessory) slotAccessory.textContent = slotEmojis.accessory;
+
+      const eq = hero.equipment;
+
+      if (eq.helmet && slotHelmet && head) {
+        const r = getRarityById(eq.helmet.rarityId || "common");
+        slotHelmet.style.borderColor = r.color;
+        head.style.boxShadow = `0 0 0 2px ${r.color}, 0 2px 4px rgba(0,0,0,0.5)`;
+      }
+      if (eq.armor && slotArmor && torso) {
+        const r = getRarityById(eq.armor.rarityId || "common");
+        slotArmor.style.borderColor = r.color;
+        torso.style.boxShadow = `0 0 0 2px ${r.color}, 0 2px 4px rgba(0,0,0,0.6)`;
+      }
+      if (eq.boots && slotBoots && legs) {
+        const r = getRarityById(eq.boots.rarityId || "common");
+        slotBoots.style.borderColor = r.color;
+        legs.style.boxShadow = `0 0 0 2px ${r.color}, 0 2px 4px rgba(0,0,0,0.7)`;
+      }
+      if (eq.weapon && slotWeapon) {
+        const r = getRarityById(eq.weapon.rarityId || "common");
+        slotWeapon.style.borderColor = r.color;
+        slotWeapon.textContent = "🥊";
+      }
+      if (eq.accessory && slotAccessory) {
+        const r = getRarityById(eq.accessory.rarityId || "common");
+        slotAccessory.style.borderColor = r.color;
+        slotAccessory.textContent = "★";
+      }
+
+      applyCurrentSkin();
     }
 
     function renderAll() {
@@ -2240,12 +2488,61 @@
       handleNewEquipment(slot, newItem, "Butin");
     }
 
+    function openCreationOverlay(fromSettings) {
+      const ov = document.getElementById("creationOverlay");
+      const input = document.getElementById("createName");
+      if (!ov) return;
+      ov.classList.remove("hidden");
+      if (input) input.value = hero.name || "";
+
+      const theme = hero.appearance?.theme || "orange";
+      selectedTheme = theme;
+      document.querySelectorAll(".color-choice").forEach(btn => {
+        const th = btn.getAttribute("data-theme");
+        if (th === theme) btn.classList.add("selected");
+        else btn.classList.remove("selected");
+      });
+    }
+
+    function selectTheme(theme) {
+      selectedTheme = theme;
+      document.querySelectorAll(".color-choice").forEach(btn => {
+        const th = btn.getAttribute("data-theme");
+        if (th === theme) btn.classList.add("selected");
+        else btn.classList.remove("selected");
+      });
+    }
+
+    function confirmCreation() {
+      const ov = document.getElementById("creationOverlay");
+      const input = document.getElementById("createName");
+      let name = (input?.value || "").trim();
+      if (!name) name = "Champion";
+      hero.name = name;
+      hero.appearance = hero.appearance || {};
+      hero.appearance.theme = selectedTheme || "orange";
+      hero.meta = hero.meta || {};
+      hero.meta.created = true;
+      saveHero();
+      renderAll();
+      if (ov) ov.classList.add("hidden");
+      clearLog();
+      log(`Bienvenue ${hero.name} dans Cartoon Clash Arena !`, "system");
+      flushLogQueue();
+    }
+
     ensureStructures();
     renderAll();
     clearLog();
     updateDevGodLabel();
     setCombatMode("story");
-    log("Bienvenue dans Cartoon Clash Arena ! Onglet Combat = pur fight, onglet Inventaire = build. 🥊", "system");
+
+    if (!hero.meta || !hero.meta.created) {
+      openCreationOverlay(false);
+      log("Bienvenue ! Commence par créer ton héros 👇", "system");
+    } else {
+      log(`Re-bienvenue ${hero.name} !`, "system");
+    }
     flushLogQueue();
   </script>
 </body>
