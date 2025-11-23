@@ -104,44 +104,12 @@
       gap: 12px;
     }
 
-    /* Onglets mobile */
-    .mobile-tabs {
-      display: flex;
-      gap: 8px;
+    /* ÉCRANS (un seul affiché sur mobile) */
+    .mobile-section {
       margin-bottom: 10px;
-      overflow-x: auto;
-      padding-bottom: 4px;
     }
 
-    .tab-btn {
-      flex: 1 0 auto;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: none;
-      background: rgba(15,23,42,0.08);
-      font-size: 13px;
-      font-weight: 600;
-      color: #111827;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .tab-btn span.icon {
-      font-size: 15px;
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg,#f97316,#facc15);
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-    }
-
-    /* Sections */
-    .mobile-section { margin-bottom: 10px; }
-
+    /* Cartes génériques */
     .card {
       background: rgba(248,250,252,0.94);
       border-radius: 18px;
@@ -250,7 +218,7 @@
       font-size: 13px;
       padding: 8px;
       border-radius: 12px;
-      height: 220px;
+      height: 180px;
       overflow-y: auto;
       border: 1px solid #1f2937;
     }
@@ -416,29 +384,66 @@
 
     .skip-line input { margin-right: 4px; }
 
-    #inventoryList { max-height: 200px; overflow-y: auto; }
+    #inventoryList { max-height: 400px; overflow-y: auto; }
 
-    /* Desktop : on affiche tout, pas d’onglets */
-    @media (min-width: 900px) {
-      .mobile-tabs { display: none; }
-      .mobile-section { display: block !important; }
-      .page {
-        max-width: 1120px;
-        margin-inline: auto;
-      }
+    /* NAVIGATION DU BAS (style Clash Royale) */
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 56px;
+      background: rgba(15,23,42,0.96);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 4px 6px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+      z-index: 40;
     }
 
-    /* Mobile : une seule section à la fois */
+    .nav-btn {
+      flex: 1;
+      height: 44px;
+      margin: 0 4px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      gap: 2px;
+      cursor: pointer;
+    }
+
+    .nav-btn span.icon { font-size: 16px; }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg,#f97316,#facc15);
+      color: #111827;
+    }
+
+    /* Desktop : tout affiché, pas de nav bas */
+    @media (min-width: 900px) {
+      .bottom-nav { display: none; }
+      .mobile-section { display: block !important; }
+      .page { padding-bottom: 18px; }
+    }
+
+    /* Mobile : un seul écran à la fois */
     @media (max-width: 899px) {
       .mobile-section { display: none; }
       .mobile-section.active { display: block; }
       .chip { display: none; }
+      .page { padding-bottom: 80px; }
     }
 
     /* Bouton & panneau dev flottant */
     .dev-btn {
       position: fixed;
-      bottom: 14px;
       right: 14px;
       width: 40px;
       height: 40px;
@@ -454,6 +459,7 @@
       z-index: 60;
       opacity: 0.6;
       transition: opacity 0.15s ease, transform 0.1s ease;
+      bottom: 14px;
     }
     .dev-btn:hover {
       opacity: 1;
@@ -462,7 +468,6 @@
 
     .dev-panel {
       position: fixed;
-      bottom: 62px;
       right: 14px;
       width: 230px;
       border-radius: 16px;
@@ -473,6 +478,7 @@
       font-size: 12px;
       z-index: 65;
       display: none;
+      bottom: 62px;
     }
     .dev-panel.open { display: block; }
     .dev-panel h3 {
@@ -496,6 +502,12 @@
       font-weight: 700;
       margin-left: 4px;
     }
+
+    /* Ajuster le dev menu au-dessus de la nav sur mobile */
+    @media (max-width: 899px) {
+      .dev-btn { bottom: 74px; }
+      .dev-panel { bottom: 126px; }
+    }
   </style>
 </head>
 <body>
@@ -507,7 +519,7 @@
         </div>
         <div class="topbar-title">
           <h1>Cartoon Clash Arena</h1>
-          <div>Version mobile avec onglets, même puissance. 😈</div>
+          <div>Version mobile multi-écrans, façon Clash Royale. 😈</div>
         </div>
       </div>
       <div class="topbar-right">
@@ -521,24 +533,8 @@
     </header>
 
     <main class="page">
-      <!-- Onglets mobile -->
-      <div class="mobile-tabs">
-        <button id="tab-hero" class="tab-btn active" onclick="setMobileSection('hero')">
-          <span class="icon">🧍‍♂️</span> Héros
-        </button>
-        <button id="tab-combat" class="tab-btn" onclick="setMobileSection('combat')">
-          <span class="icon">🥊</span> Combat
-        </button>
-        <button id="tab-shop" class="tab-btn" onclick="setMobileSection('shop')">
-          <span class="icon">🛒</span> Boutique
-        </button>
-        <button id="tab-inventory" class="tab-btn" onclick="setMobileSection('inventory')">
-          <span class="icon">🎒</span> Inventaire
-        </button>
-      </div>
-
-      <!-- SECTION HÉROS -->
-      <section id="section-hero" class="mobile-section active">
+      <!-- ÉCRAN 1 : COMBAT + HÉROS + ÉQUIPEMENT + JOURNAL -->
+      <section id="section-fight" class="mobile-section active">
         <!-- Héros -->
         <div class="card">
           <div class="card-header">
@@ -573,35 +569,18 @@
           </div>
         </div>
 
-        <!-- Cosmétiques -->
+        <!-- Équipement équipé -->
         <div class="card">
           <div class="card-header">
-            <h2><span class="icon">🎨</span> Cosmétiques</h2>
-            <div class="card-header-tag">Skins & style</div>
+            <h2><span class="icon">🧰</span> Équipement équipé</h2>
+            <div class="card-header-tag">Ce que tu portes</div>
           </div>
           <div class="card-body">
-            <div id="cosmeticsList" style="font-size:13px;"></div>
-            <div style="font-size:11px;color:#6b7280;margin-top:4px;">
-              Certains skins se débloquent via les défis (arène, niveau, etc.).
-            </div>
+            <div id="equipment"></div>
           </div>
         </div>
 
-        <!-- Défis -->
-        <div class="card">
-          <div class="card-header">
-            <h2><span class="icon">✅</span> Carnet de défis</h2>
-          <div class="card-header-tag">Objectifs & récompenses</div>
-          </div>
-          <div class="card-body">
-            <div id="achievementsList" style="font-size:13px;"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SECTION COMBAT -->
-      <section id="section-combat" class="mobile-section">
-        <!-- Histoire -->
+        <!-- Mode histoire -->
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">📖</span> Mode histoire (PvE)</h2>
@@ -696,11 +675,37 @@
             </div>
           </div>
         </div>
+
+        <!-- Journal -->
+        <div class="card">
+          <div class="card-header">
+            <h2><span class="icon">📜</span> Journal de combat</h2>
+            <div class="card-header-tag">Round par round</div>
+          </div>
+          <div class="card-body">
+            <div id="log"></div>
+          </div>
+        </div>
       </section>
 
-      <!-- SECTION BOUTIQUE -->
+      <!-- ÉCRAN 2 : INVENTAIRE -->
+      <section id="section-inventory" class="mobile-section">
+        <div class="card">
+          <div class="card-header">
+            <h2><span class="icon">🎒</span> Inventaire</h2>
+            <div class="card-header-tag">Objets stockés</div>
+          </div>
+          <div class="card-body">
+            <div id="inventoryList" style="font-size:13px;"></div>
+            <div style="font-size:11px;color:#6b7280;margin-top:4px;">
+              Ici sont stockés les objets que tu possèdes mais qui ne sont pas équipés.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÉCRAN 3 : BOUTIQUE -->
       <section id="section-shop" class="mobile-section">
-        <!-- Boutique -->
         <div class="card">
           <div class="card-header">
             <h2><span class="icon">🛒</span> Boutique</h2>
@@ -719,48 +724,57 @@
             <div id="shopItemsList" class="shop-note" style="margin-top:8px;"></div>
           </div>
         </div>
-
-        <!-- Équipement -->
-        <div class="card">
-          <div class="card-header">
-            <h2><span class="icon">🧰</span> Équipement équipé</h2>
-            <div class="card-header-tag">Ce que tu portes</div>
-          </div>
-          <div class="card-body">
-            <div id="equipment"></div>
-          </div>
-        </div>
       </section>
 
-      <!-- SECTION INVENTAIRE + JOURNAL -->
-      <section id="section-inventory" class="mobile-section">
-        <!-- Inventaire -->
+      <!-- ÉCRAN 4 : QUÊTES + COSMÉTIQUES -->
+      <section id="section-quests" class="mobile-section">
+        <!-- Quêtes / défis -->
         <div class="card">
           <div class="card-header">
-            <h2><span class="icon">🎒</span> Inventaire</h2>
-            <div class="card-header-tag">Objets stockés</div>
+            <h2><span class="icon">✅</span> Carnet de défis</h2>
+            <div class="card-header-tag">Objectifs & récompenses</div>
           </div>
           <div class="card-body">
-            <div id="inventoryList" style="font-size:13px;"></div>
-            <div style="font-size:11px;color:#6b7280;margin-top:4px;">
-              Ici sont stockés les objets que tu possèdes mais qui ne sont pas équipés.
-            </div>
+            <div id="achievementsList" style="font-size:13px;"></div>
           </div>
         </div>
 
-        <!-- Journal -->
+        <!-- Cosmétiques -->
         <div class="card">
           <div class="card-header">
-            <h2><span class="icon">📜</span> Journal de combat</h2>
-            <div class="card-header-tag">Round par round</div>
+            <h2><span class="icon">🎨</span> Cosmétiques</h2>
+            <div class="card-header-tag">Skins & style</div>
           </div>
           <div class="card-body">
-            <div id="log"></div>
+            <div id="cosmeticsList" style="font-size:13px;"></div>
+            <div style="font-size:11px;color:#6b7280;margin-top:4px;">
+              Certains skins se débloquent via les défis (arène, niveau, etc.).
+            </div>
           </div>
         </div>
       </section>
     </main>
   </div>
+
+  <!-- NAV BAS -->
+  <nav class="bottom-nav">
+    <button id="nav-fight" class="nav-btn active" onclick="setMobileSection('fight')">
+      <span class="icon">⚔️</span>
+      <span>Combat</span>
+    </button>
+    <button id="nav-inventory" class="nav-btn" onclick="setMobileSection('inventory')">
+      <span class="icon">🎒</span>
+      <span>Inventaire</span>
+    </button>
+    <button id="nav-shop" class="nav-btn" onclick="setMobileSection('shop')">
+      <span class="icon">🛒</span>
+      <span>Boutique</span>
+    </button>
+    <button id="nav-quests" class="nav-btn" onclick="setMobileSection('quests')">
+      <span class="icon">📜</span>
+      <span>Quêtes</span>
+    </button>
+  </nav>
 
   <!-- Bouton & panneau DEV -->
   <div id="devButton" class="dev-btn" onclick="toggleDevPanel()" title="Outils développeur">
@@ -786,17 +800,17 @@
     let GOD_MODE = false;
 
     function setMobileSection(id) {
-      const sections = ["hero","combat","shop","inventory"];
+      const sections = ["fight","inventory","shop","quests"];
       sections.forEach(sec => {
         const el = document.getElementById("section-" + sec);
-        const tab = document.getElementById("tab-" + sec);
-        if (!el || !tab) return;
+        const btn = document.getElementById("nav-" + sec);
+        if (!el) return;
         if (sec === id) {
           el.classList.add("active");
-          tab.classList.add("active");
+          if (btn) btn.classList.add("active");
         } else {
           el.classList.remove("active");
-          tab.classList.remove("active");
+          if (btn) btn.classList.remove("active");
         }
       });
     }
@@ -1988,9 +2002,8 @@
     renderAll();
     clearLog();
     updateDevGodLabel();
-    log("Bienvenue dans Cartoon Clash Arena (version mobile) ! Choisis un onglet et lance une mission. 🥊", "system");
+    log("Bienvenue dans Cartoon Clash Arena (multi-écrans) ! Utilise la barre du bas pour naviguer. 🥊", "system");
     flushLogQueue();
   </script>
 </body>
 </html>
-
